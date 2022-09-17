@@ -50,17 +50,17 @@
 
 ### Problem Statement
 
-There is a demand for more robust social security nets that will likely grow in the following years. Applications for such aid programs are expected to increase, along with government digitalization programs. Inspired by the winning paper of [Singapore Undergraduate Policy Conference 2022](https://www.nuspssoc.org/supc2022), the paper called for a common database be forged between MOM, MOH, CPF, MSF and IRAS, providing a one-stop application for multiple family members and schemes.
+There is a demand for more robust social security nets that will likely grow in the following years. Applications for such aid programs are expected to increase, along with government digitalization programs. Inspired by the winning [paper](https://github.com/sphades/MyInfoSupportRecommender/blob/master/%5BSUPC%202022%5D%20Policy%20Proposal%20%3CSG-FI-01%3E.pdf) of [Singapore Undergraduate Policy Conference 2022](https://www.nuspssoc.org/supc2022), it called for a common database be forged between MOM, MOH, CPF, MSF and IRAS, providing a access to one-stop application for multiple family members and schemes.
 
 ### Proposed Solution
 
-Fortunately, within MyInfo, theres already a common database among 4 of the recommended Government Organizations. MyInfo Support Recommender aims to demonstrate the possiblities of Government collaboration at solving comtemporary problems, by improving the search process and integration with MyInfo. Currently, [SupportGoWhere](https://supportgowhere.life.gov.sg/eligibility) is a form that requires a great deal of information that can be determined from MyInfo. With a simple Singpass Login, the user can retrieve such information and find all relevant help.
+Fortunately, within MyInfo, theres already a common database among 4 of the recommended Government Organizations. MyInfo Support Recommender aims to demonstrate the possiblities of Government collaboration at solving social problems, by improving the search process and integration with MyInfo. For example, [SupportGoWhere](https://supportgowhere.life.gov.sg/eligibility) is a form that requires a great deal of information that can be determined from MyInfo. With a simple Singpass Login, the user can retrieve such information and find all relevant help.
 
 Video Demo: [YouTube](https://youtu.be/kEnZ-08NAec)
 
 [Live Demo](https://master.d3lahcyhpwz9wc.amplifyapp.com/)
 
-\*\*Note: As required by SingPass API, 'http://localhost:3001/callback' is required to be set as the callback URL without certs or API keys issued by Singpass. Hence, the live demo requires backend to be running locally. The full working demo can be viewed in the YouTube Link.
+\*\*Note: As required by SingPass API, 'http://localhost:3001/callback' is required to be set as the callback URL without certs or API keys issued by Singpass. As such, the live demo does not function to its full capability. The full working demo can be viewed in the YouTube Link.
 
 \*\*Note: Due to lack of API Authentication and Certs issued from SingPass, certain scope of data required for this feature is unavailable. For demonstration, Sandbox Environment API will be used for Person Data.
 
@@ -149,7 +149,7 @@ yarn dev
 
 ## Contact
 
-Your Name - tanyieern@gmail.com
+Nicholas Tan - tanyieern@gmail.com
 
 Project Link: [https://github.com/sphades/MyInfoSupportRecommender](https://github.com/sphades/MyInfoSupportRecommender)
 
