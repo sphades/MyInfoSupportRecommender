@@ -30,6 +30,7 @@
       <ul>
         <li><a href="#client">Client</a></li>
         <li><a href="#server">Server</a></li>
+        <li><a href="#database">Database</a></li>
         <li><a href="#ci/cd">CI/CD</a></li>
         </ul>
     <li>
@@ -54,7 +55,7 @@ There is a demand for more robust social security nets that will likely grow in 
 
 ### Proposed Solution
 
-Fortunately, within MyInfo, theres already a common database among 4 of the recommended Government Organizations. MyInfo Support Recommender aims to demonstrate the possiblities of Government collaboration at solving social problems, by improving the search process and integration with MyInfo. For example, [SupportGoWhere](https://supportgowhere.life.gov.sg/eligibility) is a form that requires a great deal of information that can be determined from MyInfo. With a simple Singpass Login, the user can retrieve such information and find all relevant help.
+Fortunately, within MyInfo, theres already a common database among 4 of the recommended Government Organizations. MyInfo Support Recommender aims to demonstrate the possiblities of Government collaboration at solving social problems, by improving the search process and integration with MyInfo. For example, [SupportGoWhere](https://supportgowhere.life.gov.sg/eligibility) has a form that requires a great deal of information that can be determined from MyInfo. With a simple Singpass Login, the user can retrieve such information and find all relevant help.
 
 Video Demo: [YouTube](https://youtu.be/kEnZ-08NAec)
 
@@ -65,6 +66,8 @@ Video Demo: [YouTube](https://youtu.be/kEnZ-08NAec)
 \*\*Note: Due to lack of API Authentication and Certs issued from SingPass, certain scope of data required for this feature is unavailable. For demonstration, Sandbox Environment API will be used for Person Data.
 
 ### Technical Architecture
+
+![Architecture Diagram](https://github.com/sphades/MyInfoSupportRecommender/blob/master/Architecture.png)
 
 To authenticate users, MyInfo Support Recommender takes advantage of SingPass OAuth2 for user authentication. The user information will then be obtained from MyInfo Server.
 
@@ -80,20 +83,20 @@ The backend is built express, node and TypeScript. The main purpose of the backe
 
 Backend is hosted by Heroku, which is based on AWS.
 
+#### Database
+
+MongoDB Atlas, a cloud NoSQL database was used to capture transaction logs, as required by SingPass MyInfo. Transaction logs are recorded whenever a redirected API is sent to the client. The transactions logs are kept to dispute potential issues involving misuse of personal data, as well as being part of the technical requirements for implementing MyInfo into any application.
+
+Each TransactionLog stores:
+
+1. uinfin
+2. Scope of the transaction
+3. Timestamp
+
 #### CI/CD
 
 Prettier and ESlint have been implemented to ensure readable and consistent code.
 Backend (Heroku) and Frontend (AWS Amplify) are set to automatic deployment whenever a git commit is pushed.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-### Built With
-
-- React
-- express
-- node.js
-- TypeScript
-- Hosted on AWS Amplify and Heroku
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
