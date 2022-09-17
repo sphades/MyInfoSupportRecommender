@@ -5,6 +5,7 @@ import { APP_CONFIG, MYINFO_CONNECTOR_CONFIG } from "./config/config.js";
 import MyInfoConnector from "myinfo-connector-nodejs";
 import { randomBytes } from "crypto";
 import axios from "axios";
+import { createTransactionLog } from "./model/repository.js";
 
 dotenv.config();
 
@@ -81,7 +82,7 @@ app.post(
         .getMyInfoPersonData(authCode, state, txnNo)
         .then((personData: any) => {
           let url = "https://supportgowhere.life.gov.sg/eligibility";
-          console.log(JSON.stringify(personData)); // log the data for demonstration purpose only
+          // console.log(JSON.stringify(personData)); // log the data for demonstration purpose only
           /* 
         P/s: Your logic to handle the person data ...
         */
@@ -97,6 +98,10 @@ app.post(
           );
 
           res.status(200).send(url);
+          createTransactionLog(
+            personData.uinfin.value,
+            APP_CONFIG.DEMO_APP_SCOPES
+          );
         })
         .catch((error: any) => {
           console.log("---MyInfo NodeJs Library Error---");

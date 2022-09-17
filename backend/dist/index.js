@@ -10,6 +10,7 @@ const config_js_1 = require("./config/config.js");
 const myinfo_connector_nodejs_1 = __importDefault(require("myinfo-connector-nodejs"));
 const crypto_1 = require("crypto");
 const axios_1 = __importDefault(require("axios"));
+const repository_js_1 = require("./model/repository.js");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.urlencoded({ extended: true }));
@@ -74,7 +75,7 @@ app.post("/getPersonData", function (req, res, next) {
             .getMyInfoPersonData(authCode, state, txnNo)
             .then((personData) => {
             let url = "https://supportgowhere.life.gov.sg/eligibility";
-            console.log(JSON.stringify(personData)); // log the data for demonstration purpose only
+            // console.log(JSON.stringify(personData)); // log the data for demonstration purpose only
             /*
           P/s: Your logic to handle the person data ...
           */
@@ -84,6 +85,7 @@ app.post("/getPersonData", function (req, res, next) {
             url = query(sandboxData);
             console.log("--- Sending Person Data From Your-Server (Backend) to Your-Client (Frontend)---:");
             res.status(200).send(url);
+            (0, repository_js_1.createTransactionLog)(personData.uinfin.value, config_js_1.APP_CONFIG.DEMO_APP_SCOPES);
         })
             .catch((error) => {
             console.log("---MyInfo NodeJs Library Error---");
