@@ -97,12 +97,84 @@ app.post(
   }
 );
 
+const findEmploymentStatus = (personData: any): string => {
+  // TODO: fix buggy code
+  const cpfHistory = personData.cpfcontributions.history;
+  const pastTime = new Date(cpfHistory[cpfHistory.length - 1].date.value);
+  const now = new Date("28/7/22"); //can't use now cos test data is problematic
+  const thirtyOneDaysInMs = 31 * 24 * 60 * 60 * 1000;
+  const timeDiffInMs = now.getTime() - pastTime.getTime();
+  console.log(timeDiffInMs);
+  if (!personData.residentialstatus.code || timeDiffInMs <= thirtyOneDaysInMs) {
+    return "EMPLOYED"; //foreigners have to be employed
+    // people with CPF contribution in the last month should also be employed
+  }
+  if (!personData.noahistory[0]) {
+    return "STUDENT"; //No past history of income
+  }
+  if (!cpfHistory) {
+    console.log(cpfHistory);
+    return "UNEM_NOT_SEARCHING"; //only show up to 15 months
+  }
+  if (personData.noahistory[0]) {
+    return "SELF_EMPLOYED"; //No past history of income
+  }
+  return "UNEM_SEARCHING";
+  // super hacky, alot of edge cases unaccounted for. to be revisited
+};
+
+const findOwnership = (personData: any): string => {
+  if (personData.ownerprivate.value || personData.hdbownership[0]) return "YES";
+
+  return "NO";
+};
+
+const findTypeOfProperty = (personData: any): string => {
+  if (personData.housingtype.code) return "PRIVATE";
+  let hdbtype = personData.hdbtype.code;
+  switch (hdbtype) {
+    case 111:
+      return "PUBLIC_1R_2R";
+    case 112:
+      return "PUBLIC_1R_2R";
+    case 113:
+      return "PUBLIC_3R_4R";
+    case 114:
+      return "PUBLIC_3R_4R";
+    default:
+      return "PUBLIC_OTHER";
+  }
+};
+
+const findChildrenAge = (personData: any): string => {
+  // Do you have any children age 21 and below
+  if (personData.childrenbirthrecords[0]) return "YES";
+
+  return "NO";
+};
+
+const calculateHouseholdIncome = (personData: any): string => {
+  //rough estimate, cpf is 37% of income and below,
+  return "2000";
+};
+
+const calculatePerCapitaIncome = (personData: any): string => {
+  return "YES";
+};
+
+const childCitizenship = (personData: any): string => {
+  return "YES";
+};
+
 const query = (personData: any): string => {
-  console.log(personData.dob.value);
   let birthYear = personData.dob.value.substring(0, 4);
   let nationality = personData.nationality.code;
+  let employmentStatus: string = findEmploymentStatus(personData);
+  let ownerOfProperty: string = findOwnership(personData);
+  let typeOfProperty: string = findTypeOfProperty(personData);
+  let childrenAge = findChildrenAge(personData);
 
-  let defaultURL = `https://supportgowhere.life.gov.sg/eligibility/results?affectedByCovid[]=LOST_JOB|REDUCED_INCOME|HOUSEHOLD_CONTRACTED_COVID|HOUSEHOLD_QO_SHN|FDW_QO_SHN&birthYear=${birthYear}&category[]=FINANCIAL|FAMILIES_PARENTING|EDUCATION|HOUSING|WORK|MENTAL_HEALTH|HEALTHCARE|SENIORS|DISABILITY&childCitizenship[]=SG|PR|OTHERS&citizenship=${nationality}}&employmentStatus=UNEM_NOT_SEARCHING&hasChildEqualOrBelow21=YES&monthlyHouseholdIncome=2000&monthlyPerCapitaIncome=500&needsAssistanceAsPwd=YES&ownsPropertyOfResidence=YES&typeOfPropertyOfResidence=PUBLIC_1R_2R`;
+  let defaultURL = `https://supportgowhere.life.gov.sg/eligibility/results?affectedByCovid[]=LOST_JOB|REDUCED_INCOME|HOUSEHOLD_CONTRACTED_COVID|HOUSEHOLD_QO_SHN|FDW_QO_SHN&birthYear=${birthYear}&category[]=FINANCIAL|FAMILIES_PARENTING|EDUCATION|HOUSING|WORK|MENTAL_HEALTH|HEALTHCARE|SENIORS|DISABILITY&childCitizenship[]=SG|PR|OTHERS&citizenship=${nationality}}&employmentStatus=${employmentStatus}&hasChildEqualOrBelow21=${childrenAge}&monthlyHouseholdIncome=2000&monthlyPerCapitaIncome=500&needsAssistanceAsPwd=YES&ownsPropertyOfResidence=${ownerOfProperty}&typeOfPropertyOfResidence=${typeOfProperty}`;
 
   return defaultURL;
 };
