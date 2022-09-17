@@ -52,7 +52,7 @@ There is a demand for more robust social security nets that will likely grow in 
 
 Fortunately, within MyInfo, theres already a common database among 4 of the recommended Government Organizations. MyInfo Support Recommender aims to demonstrate the possiblities of Government collaboration at solving comtemporary problems, by improving the search process and integration with MyInfo. Currently, [SupportGoWhere](https://supportgowhere.life.gov.sg/eligibility) is a form that requires a great deal of information that can be determined from MyInfo. With a simple Singpass Login, the user can retrieve such information and find all relevant help.
 
-Video Demo:
+Video Demo: [YouTube](https://youtu.be/kEnZ-08NAec)
 
 ### Technical Architecture
 
