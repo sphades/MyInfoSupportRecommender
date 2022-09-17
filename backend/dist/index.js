@@ -9,7 +9,6 @@ const cors_1 = __importDefault(require("cors"));
 const config_js_1 = require("./config/config.js");
 const myinfo_connector_nodejs_1 = __importDefault(require("myinfo-connector-nodejs"));
 const crypto_1 = require("crypto");
-const config = require("./config/config.js");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.urlencoded({ extended: true }));
@@ -53,10 +52,10 @@ app.listen(port, () => {
 app.post("/getPersonData", function (req, res, next) {
     try {
         // get variables from frontend
-        var authCode = req.body.authCode;
-        var state = req.body.state;
-        var txnNo = (0, crypto_1.randomBytes)(10).toString("hex");
-        let connector = new myinfo_connector_nodejs_1.default(config.MYINFO_CONNECTOR_CONFIG);
+        const authCode = req.body.authCode;
+        const state = req.body.state;
+        const txnNo = (0, crypto_1.randomBytes)(10).toString("hex");
+        const connector = new myinfo_connector_nodejs_1.default(config_js_1.MYINFO_CONNECTOR_CONFIG);
         console.log("Calling MyInfo NodeJs Library...");
         connector
             .getMyInfoPersonData(authCode, state, txnNo)
@@ -120,7 +119,7 @@ const findOwnership = (personData) => {
 const findTypeOfProperty = (personData) => {
     if (personData.housingtype.code)
         return "PRIVATE";
-    let hdbtype = personData.hdbtype.code;
+    const hdbtype = personData.hdbtype.code;
     switch (hdbtype) {
         case 111:
             return "PUBLIC_1R_2R";
@@ -151,12 +150,12 @@ const childCitizenship = (personData) => {
     return "YES";
 };
 const query = (personData) => {
-    let birthYear = personData.dob.value.substring(0, 4);
-    let nationality = personData.nationality.code;
-    let employmentStatus = findEmploymentStatus(personData);
-    let ownerOfProperty = findOwnership(personData);
-    let typeOfProperty = findTypeOfProperty(personData);
-    let childrenAge = findChildrenAge(personData);
-    let defaultURL = `https://supportgowhere.life.gov.sg/eligibility/results?affectedByCovid[]=LOST_JOB|REDUCED_INCOME|HOUSEHOLD_CONTRACTED_COVID|HOUSEHOLD_QO_SHN|FDW_QO_SHN&birthYear=${birthYear}&category[]=FINANCIAL|FAMILIES_PARENTING|EDUCATION|HOUSING|WORK|MENTAL_HEALTH|HEALTHCARE|SENIORS|DISABILITY&childCitizenship[]=SG|PR|OTHERS&citizenship=${nationality}}&employmentStatus=${employmentStatus}&hasChildEqualOrBelow21=${childrenAge}&monthlyHouseholdIncome=2000&monthlyPerCapitaIncome=500&needsAssistanceAsPwd=YES&ownsPropertyOfResidence=${ownerOfProperty}&typeOfPropertyOfResidence=${typeOfProperty}`;
+    const birthYear = personData.dob.value.substring(0, 4);
+    const nationality = personData.nationality.code;
+    const employmentStatus = findEmploymentStatus(personData);
+    const ownerOfProperty = findOwnership(personData);
+    const typeOfProperty = findTypeOfProperty(personData);
+    const childrenAge = findChildrenAge(personData);
+    const defaultURL = `https://supportgowhere.life.gov.sg/eligibility/results?affectedByCovid[]=LOST_JOB|REDUCED_INCOME|HOUSEHOLD_CONTRACTED_COVID|HOUSEHOLD_QO_SHN|FDW_QO_SHN&birthYear=${birthYear}&category[]=FINANCIAL|FAMILIES_PARENTING|EDUCATION|HOUSING|WORK|MENTAL_HEALTH|HEALTHCARE|SENIORS|DISABILITY&childCitizenship[]=SG|PR|OTHERS&citizenship=${nationality}}&employmentStatus=${employmentStatus}&hasChildEqualOrBelow21=${childrenAge}&monthlyHouseholdIncome=2000&monthlyPerCapitaIncome=500&needsAssistanceAsPwd=YES&ownsPropertyOfResidence=${ownerOfProperty}&typeOfPropertyOfResidence=${typeOfProperty}`;
     return defaultURL;
 };

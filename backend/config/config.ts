@@ -1,8 +1,8 @@
 import "dotenv/config";
 
-export let ORIGIN = process.env.ORIGIN;
+export const ORIGIN = process.env.ORIGIN;
 
-export let APP_CONFIG = {
+export const APP_CONFIG = {
   DEMO_APP_CLIENT_ID: process.env.CLIENT_ID,
   DEMO_APP_CLIENT_SECRET: process.env.CLIENT_SECRET,
   DEMO_APP_CLIENT_SECURE_CERT: "./cert/your-sample-app-certificate.p12",
@@ -19,7 +19,7 @@ export let APP_CONFIG = {
 
 //Set following configuration for MyInfo library to call token and person API
 // IMPORTANT: DO NOT rename the JSON Keys
-export let MYINFO_CONNECTOR_CONFIG = {
+export const MYINFO_CONNECTOR_CONFIG = {
   MYINFO_SIGNATURE_CERT_PUBLIC_CERT: "./cert/staging-myinfo-public-cert.pem",
 
   CLIENT_ID: APP_CONFIG.DEMO_APP_CLIENT_ID, //Client id provided during onboarding

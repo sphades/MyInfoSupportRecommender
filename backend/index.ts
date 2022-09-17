@@ -4,7 +4,6 @@ import cors from "cors";
 import { APP_CONFIG, MYINFO_CONNECTOR_CONFIG } from "./config/config.js";
 import MyInfoConnector from "myinfo-connector-nodejs";
 import { randomBytes } from "crypto";
-const config = require("./config/config.js");
 
 dotenv.config();
 
@@ -56,11 +55,11 @@ app.post(
   function (req: { body: { authCode: any; state: any } }, res: any, next: any) {
     try {
       // get variables from frontend
-      var authCode = req.body.authCode;
-      var state = req.body.state;
-      var txnNo = randomBytes(10).toString("hex");
+      const authCode = req.body.authCode;
+      const state = req.body.state;
+      const txnNo = randomBytes(10).toString("hex");
 
-      let connector = new MyInfoConnector(config.MYINFO_CONNECTOR_CONFIG);
+      const connector = new MyInfoConnector(MYINFO_CONNECTOR_CONFIG);
       console.log("Calling MyInfo NodeJs Library...");
 
       connector
@@ -131,7 +130,7 @@ const findOwnership = (personData: any): string => {
 
 const findTypeOfProperty = (personData: any): string => {
   if (personData.housingtype.code) return "PRIVATE";
-  let hdbtype = personData.hdbtype.code;
+  const hdbtype = personData.hdbtype.code;
   switch (hdbtype) {
     case 111:
       return "PUBLIC_1R_2R";
@@ -167,14 +166,14 @@ const childCitizenship = (personData: any): string => {
 };
 
 const query = (personData: any): string => {
-  let birthYear = personData.dob.value.substring(0, 4);
-  let nationality = personData.nationality.code;
-  let employmentStatus: string = findEmploymentStatus(personData);
-  let ownerOfProperty: string = findOwnership(personData);
-  let typeOfProperty: string = findTypeOfProperty(personData);
-  let childrenAge = findChildrenAge(personData);
+  const birthYear = personData.dob.value.substring(0, 4);
+  const nationality = personData.nationality.code;
+  const employmentStatus: string = findEmploymentStatus(personData);
+  const ownerOfProperty: string = findOwnership(personData);
+  const typeOfProperty: string = findTypeOfProperty(personData);
+  const childrenAge = findChildrenAge(personData);
 
-  let defaultURL = `https://supportgowhere.life.gov.sg/eligibility/results?affectedByCovid[]=LOST_JOB|REDUCED_INCOME|HOUSEHOLD_CONTRACTED_COVID|HOUSEHOLD_QO_SHN|FDW_QO_SHN&birthYear=${birthYear}&category[]=FINANCIAL|FAMILIES_PARENTING|EDUCATION|HOUSING|WORK|MENTAL_HEALTH|HEALTHCARE|SENIORS|DISABILITY&childCitizenship[]=SG|PR|OTHERS&citizenship=${nationality}}&employmentStatus=${employmentStatus}&hasChildEqualOrBelow21=${childrenAge}&monthlyHouseholdIncome=2000&monthlyPerCapitaIncome=500&needsAssistanceAsPwd=YES&ownsPropertyOfResidence=${ownerOfProperty}&typeOfPropertyOfResidence=${typeOfProperty}`;
+  const defaultURL = `https://supportgowhere.life.gov.sg/eligibility/results?affectedByCovid[]=LOST_JOB|REDUCED_INCOME|HOUSEHOLD_CONTRACTED_COVID|HOUSEHOLD_QO_SHN|FDW_QO_SHN&birthYear=${birthYear}&category[]=FINANCIAL|FAMILIES_PARENTING|EDUCATION|HOUSING|WORK|MENTAL_HEALTH|HEALTHCARE|SENIORS|DISABILITY&childCitizenship[]=SG|PR|OTHERS&citizenship=${nationality}}&employmentStatus=${employmentStatus}&hasChildEqualOrBelow21=${childrenAge}&monthlyHouseholdIncome=2000&monthlyPerCapitaIncome=500&needsAssistanceAsPwd=YES&ownsPropertyOfResidence=${ownerOfProperty}&typeOfPropertyOfResidence=${typeOfProperty}`;
 
   return defaultURL;
 };
