@@ -5,7 +5,6 @@
   "license": "MIT",
   "scripts": {
     "build": "npx tsc",
-    "postinstall": "npx tsc",
     "start": "node dist/index.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
     "deploy": "git add . && git commit -m Heroku && git push heroku master",
