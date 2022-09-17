@@ -4,6 +4,7 @@ import cors from "cors";
 import { APP_CONFIG, MYINFO_CONNECTOR_CONFIG } from "./config/config.js";
 import MyInfoConnector from "myinfo-connector-nodejs";
 import { randomBytes } from "crypto";
+import axios from "axios";
 
 dotenv.config();
 
@@ -13,6 +14,17 @@ app.use(express.json());
 app.use(cors());
 app.options("*", cors());
 const port = process.env.PORT;
+
+let sandboxData: any;
+
+axios
+  .get("https://sandbox.api.myinfo.gov.sg/com/v3/person-sample/S9812381D")
+  .then((res) => {
+    sandboxData = res.data;
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 
 // Get the environment variables (app info) from the config
 app.get("/getEnv", function (req, res) {
@@ -70,7 +82,16 @@ app.post(
           /* 
         P/s: Your logic to handle the person data ...
         */
-          url = query(personData);
+          // Since test/sandbox both doesnt allow you to get any other data than the given scope, i need to use sandbox
+          // api to test
+
+          // const sandboxData = Axios.get(
+          //   "https://sandbox.api.myinfo.gov.sg/com/v3/person-sample/S9812381D"
+          // );
+
+          //url = query(personData);
+
+          url = query(sandboxData);
 
           console.log(
             "--- Sending Person Data From Your-Server (Backend) to Your-Client (Frontend)---:"
@@ -173,7 +194,7 @@ const query = (personData: any): string => {
   const typeOfProperty: string = findTypeOfProperty(personData);
   const childrenAge = findChildrenAge(personData);
 
-  const defaultURL = `https://supportgowhere.life.gov.sg/eligibility/results?affectedByCovid[]=LOST_JOB|REDUCED_INCOME|HOUSEHOLD_CONTRACTED_COVID|HOUSEHOLD_QO_SHN|FDW_QO_SHN&birthYear=${birthYear}&category[]=FINANCIAL|FAMILIES_PARENTING|EDUCATION|HOUSING|WORK|MENTAL_HEALTH|HEALTHCARE|SENIORS|DISABILITY&childCitizenship[]=SG|PR|OTHERS&citizenship=${nationality}}&employmentStatus=${employmentStatus}&hasChildEqualOrBelow21=${childrenAge}&monthlyHouseholdIncome=2000&monthlyPerCapitaIncome=500&needsAssistanceAsPwd=YES&ownsPropertyOfResidence=${ownerOfProperty}&typeOfPropertyOfResidence=${typeOfProperty}`;
+  const defaultURL = `https://supportgowhere.life.gov.sg/eligibility/results?affectedByCovid[]=LOST_JOB|REDUCED_INCOME|HOUSEHOLD_CONTRACTED_COVID|HOUSEHOLD_QO_SHN|FDW_QO_SHN&birthYear=${birthYear}&category[]=FINANCIAL|FAMILIES_PARENTING|EDUCATION|HOUSING|WORK|MENTAL_HEALTH|HEALTHCARE|SENIORS|DISABILITY&childCitizenship[]=SG|PR|OTHERS&citizenship=${nationality}&employmentStatus=${employmentStatus}&hasChildEqualOrBelow21=${childrenAge}&monthlyHouseholdIncome=2000&monthlyPerCapitaIncome=500&needsAssistanceAsPwd=YES&ownsPropertyOfResidence=${ownerOfProperty}&typeOfPropertyOfResidence=${typeOfProperty}`;
 
   return defaultURL;
 };
