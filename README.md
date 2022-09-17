@@ -1,46 +1,153 @@
-# Getting Started with Create React App
+<h3 align="center">MyInfo Support Recommender</h3>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+  <p align="center">
+    MyInfo integration into SupportGoWhere
+    <br />
+    <a href="https://github.com/sphades/MyInfoSupportRecommender"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/sphades/MyInfoSupportRecommender">View Demo</a>
+    ·
+    <a href="https://github.com/sphades/MyInfoSupportRecommender/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/sphades/MyInfoSupportRecommender/issues">Request Feature</a>
+  </p>
+</div>
 
-## Available Scripts
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
 
-In the project directory, you can run:
+<!-- ABOUT THE PROJECT -->
 
-### `npm start`
+## About The Project
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Problem Statement
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+There is a demand for more robust social security nets that will likely grow in the following years. Applications for such aid programs are expected to increase, along with government digitalization programs. Inspired by the winning paper of [Singapore Undergraduate Policy Conference 2022](https://www.nuspssoc.org/supc2022), the paper called for a common database be forged between MOM, MOH, CPF, MSF and IRAS, providing a one-stop application for multiple family members and schemes.
 
-### `npm test`
+### Proposed Solution
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Fortunately, within MyInfo, theres already a common database among 4 of the recommended Government Organizations. MyInfo Support Recommender aims to demonstrate the possiblities of Government collaboration at solving comtemporary problems, by improving the search process and integration with MyInfo. Currently, [SupportGoWhere](https://supportgowhere.life.gov.sg/eligibility) is a form that requires a great deal of information that can be determined from MyInfo. With a simple Singpass Login, the user can retrieve such information and find all relevant help.
 
-### `npm run build`
+Video Demo:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Technical Architecture
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+To authenticate users, MyInfo Support Recommender takes advantage of SingPass OAuth2 for user authentication. The user information will then be obtained from MyInfo Server.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Note: Due to lack of API authentication and Certs, for demonstration, Sandbox Environment API will be used for Person Data.
 
-### `npm run eject`
+#### Client
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+The frontend is built with React and TypeScript, and is intended to replicate the original [SupportGoWhere](https://supportgowhere.life.gov.sg/eligibility) with an additional Retrieve MyInfo Button.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Frontend is hosted by AWS Amplify.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+#### Server
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+The backend is built express, node and TypeScript. The main purpose of the backend server is to communicate with the MyInfo server as well as return a redirected url to the client.
 
-## Learn More
+Backend is hosted by Heroku, which is based on AWS.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### CI/CD
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Prettier and ESlint are inplace to ensure readable code.
+Backend(Heroku) and Frontend(AWS Amplify) are set to automatic deployment whenever a git commit is pushed.
+
+[![Product Name Screen Shot][product-screenshot]](https://example.com)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Built With
+
+- React
+- express
+- node.js
+- TypeScript
+- Hosted on AWS Amplify and Heroku
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- GETTING STARTED -->
+
+## Getting Started
+
+### Prerequisites
+
+- node
+
+- npm
+
+  ```sh
+  npm install npm@latest -g
+  ```
+
+### Installation
+
+### 1. Clone the repo
+
+```sh
+git clone https://github.com/sphades/MyInfoSupportRecommender.git
+```
+
+### 2. Install NPM packages
+
+```sh
+npm install
+```
+
+### 3. Run locally
+
+```sh
+    // Change API_URL in frontend/src/config/config.ts to '//localhost:8000'
+
+    cd frontend
+    npm start
+```
+
+```sh
+    cd backend
+    npm dev
+```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- USAGE EXAMPLES -->
+
+<!-- CONTACT -->
+
+## Contact
+
+Your Name - tanyieern@gmail.com
+
+Project Link: [https://github.com/sphades/MyInfoSupportRecommender](https://github.com/sphades/MyInfoSupportRecommender)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->

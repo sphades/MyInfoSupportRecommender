@@ -174,11 +174,12 @@ const findChildrenAge = (personData: any): string => {
 };
 
 const calculateHouseholdIncome = (personData: any): string => {
-  //rough estimate, cpf is 37% of income and below,
+  //household income no longer available in myinfo
   return "2000";
 };
 
 const calculatePerCapitaIncome = (personData: any): string => {
+  //no household income, can't calculate per capita income
   return "YES";
 };
 
