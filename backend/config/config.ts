@@ -12,18 +12,11 @@ export const APP_CONFIG = {
   DEMO_APP_PURPOSE: "demonstrating MyInfo APIs",
   DEMO_APP_SCOPES:
     "uinfin,name,sex,race,nationality,dob,email,mobileno,regadd,housingtype,hdbtype,marital,edulevel,noa-basic,ownerprivate,cpfcontributions,cpfbalances",
-  MYINFO_API_AUTHORISE: {
-    SANDBOX: "https://sandbox.api.myinfo.gov.sg/com/v3/authorise",
-    TEST: "https://test.api.myinfo.gov.sg/com/v3/authorise",
-  },
-  MYINFO_API_TOKEN: {
-    SANDBOX: "https://sandbox.api.myinfo.gov.sg/com/v3/token",
-    TEST: "https://test.api.myinfo.gov.sg/com/v3/token",
-  },
-  MYINFO_API_PERSON: {
-    SANDBOX: "https://sandbox.api.myinfo.gov.sg/com/v3/person",
-    TEST: "https://test.api.myinfo.gov.sg/com/v3/person",
-  },
+  MYINFO_API_AUTHORISE: "https://test.api.myinfo.gov.sg/com/v3/authorise",
+
+  MYINFO_API_TOKEN: "https://test.api.myinfo.gov.sg/com/v3/token",
+
+  MYINFO_API_PERSON: "https://test.api.myinfo.gov.sg/com/v3/person",
 };
 
 // export const APP_CONFIG = {
