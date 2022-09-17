@@ -3,19 +3,43 @@ import "dotenv/config";
 export const ORIGIN = process.env.ORIGIN;
 
 export const APP_CONFIG = {
-  DEMO_APP_CLIENT_ID: process.env.CLIENT_ID,
-  DEMO_APP_CLIENT_SECRET: process.env.CLIENT_SECRET,
-  DEMO_APP_CLIENT_SECURE_CERT: "./cert/your-sample-app-certificate.p12",
-  DEMO_APP_CLIENT_SECURE_CERT_PASSPHRASE:
-    process.env.CLIENT_SECURE_CERT_PASSPHRASE,
-  DEMO_APP_CALLBACK_URL: process.env.CALLBACK_URL_DEV,
-  DEMO_APP_PURPOSE: process.env.PURPOSE,
-  DEMO_APP_SCOPES: process.env.SCOPES,
-  MYINFO_API_AUTHORISE: process.env.MYINFO_API_AUTHORISE,
-  MYINFO_API_TOKEN: process.env.MYINFO_API_TOKEN,
-  MYINFO_API_PERSON: process.env.MYINFO_API_PERSON,
   ENVIRONMENT: "TEST",
+  DEMO_APP_CLIENT_ID: "STG2-MYINFO-DEMO-APP",
+  DEMO_APP_CLIENT_SECRET: "outzuu7n3bxzcvdyrv98y3picshnkydf1r4ybwas",
+  DEMO_APP_CLIENT_SECURE_CERT: "./cert/your-sample-app-certificate.p12",
+  DEMO_APP_CLIENT_SECURE_CERT_PASSPHRASE: "DemoApp",
+  DEMO_APP_CALLBACK_URL: "http://localhost:3001/callback",
+  DEMO_APP_PURPOSE: "demonstrating MyInfo APIs",
+  DEMO_APP_SCOPES:
+    "uinfin,name,sex,race,nationality,dob,email,mobileno,regadd,housingtype,hdbtype,marital,edulevel,noa-basic,ownerprivate,cpfcontributions,cpfbalances",
+  MYINFO_API_AUTHORISE: {
+    SANDBOX: "https://sandbox.api.myinfo.gov.sg/com/v3/authorise",
+    TEST: "https://test.api.myinfo.gov.sg/com/v3/authorise",
+  },
+  MYINFO_API_TOKEN: {
+    SANDBOX: "https://sandbox.api.myinfo.gov.sg/com/v3/token",
+    TEST: "https://test.api.myinfo.gov.sg/com/v3/token",
+  },
+  MYINFO_API_PERSON: {
+    SANDBOX: "https://sandbox.api.myinfo.gov.sg/com/v3/person",
+    TEST: "https://test.api.myinfo.gov.sg/com/v3/person",
+  },
 };
+
+// export const APP_CONFIG = {
+//   DEMO_APP_CLIENT_ID: process.env.CLIENT_ID,
+//   DEMO_APP_CLIENT_SECRET: process.env.CLIENT_SECRET,
+//   DEMO_APP_CLIENT_SECURE_CERT: "./cert/your-sample-app-certificate.p12",
+//   DEMO_APP_CLIENT_SECURE_CERT_PASSPHRASE:
+//     process.env.CLIENT_SECURE_CERT_PASSPHRASE,
+//   DEMO_APP_CALLBACK_URL: process.env.CALLBACK_URL_DEV,
+//   DEMO_APP_PURPOSE: process.env.PURPOSE,
+//   DEMO_APP_SCOPES: process.env.SCOPES,
+//   MYINFO_API_AUTHORISE: process.env.MYINFO_API_AUTHORISE,
+//   MYINFO_API_TOKEN: process.env.MYINFO_API_TOKEN,
+//   MYINFO_API_PERSON: process.env.MYINFO_API_PERSON,
+//   ENVIRONMENT: "TEST",
+// };
 
 //Set following configuration for MyInfo library to call token and person API
 // IMPORTANT: DO NOT rename the JSON Keys
