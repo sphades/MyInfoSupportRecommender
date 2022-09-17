@@ -17,7 +17,18 @@ const Redirect = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  return <div style={{ alignItems: "center" }}>Redirecting </div>;
+  return (
+    <p
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
+      Finding your social support!
+    </p>
+  );
 };
 
 export default Redirect;

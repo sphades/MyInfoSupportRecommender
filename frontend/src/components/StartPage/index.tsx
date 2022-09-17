@@ -1,13 +1,19 @@
 import { cl } from "./color";
-import { StartScreenWrapper, TimerWrapper } from "./StartPage.styles";
+import { StartScreenWrapper, TimerWrapper } from "./styles";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button } from "../Button";
 import { API_URL } from "../../config/config";
+import myInfoButton from "./Primary.png";
+import { NONAME } from "dns";
 
-const Start = (): JSX.Element => {
+const StartPage = (): JSX.Element => {
   const handleStart = () => {
     callAuthoriseApi();
+  };
+
+  const handleContinue = () => {
+    window.location.replace("https://supportgowhere.life.gov.sg/eligibility");
   };
 
   let state = Math.floor(Math.random() * 100000);
@@ -74,12 +80,20 @@ const Start = (): JSX.Element => {
       <Button
         colorScheme="info"
         style={{ backgroundColor: cl.blue.reg, borderColor: cl.blue.reg }}
-        onClick={handleStart}
+        onClick={handleContinue}
       >
         {"Continue"}
       </Button>
+      <TimerWrapper>
+        <Button
+          style={{ border: NONAME, padding: 0, marginTop: 10 }}
+          onClick={handleStart}
+        >
+          <img src={myInfoButton} alt="MyInfo" />
+        </Button>
+      </TimerWrapper>
     </StartScreenWrapper>
   );
 };
 
-export { Start };
+export { StartPage as Start };
