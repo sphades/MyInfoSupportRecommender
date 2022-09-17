@@ -18,6 +18,7 @@ app.use((0, cors_1.default)());
 app.options("*", (0, cors_1.default)());
 const port = process.env.PORT;
 let sandboxData;
+// calls for sandbox person data on server start
 axios_1.default
     .get("https://sandbox.api.myinfo.gov.sg/com/v3/person-sample/S9812381D")
     .then((res) => {
@@ -53,12 +54,14 @@ app.get("/getEnv", function (req, res) {
         });
     }
 });
+// Health check to ensure server is running
 app.get("/", (req, res) => {
     res.send("Express + TypeScript Server");
 });
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
 });
+// Make API call to MyInfo server
 app.post("/getPersonData", function (req, res, next) {
     try {
         // get variables from frontend
@@ -75,17 +78,12 @@ app.post("/getPersonData", function (req, res, next) {
             /*
           P/s: Your logic to handle the person data ...
           */
-            // Since test/sandbox both doesnt allow you to get any other data than the given scope, i need to use sandbox
+            // Since test/sandbox both doesn't allow you to get any other data than the given scope, i need to use sandbox
             // api to test
-            // const sandboxData = Axios.get(
-            //   "https://sandbox.api.myinfo.gov.sg/com/v3/person-sample/S9812381D"
-            // );
-            //url = query(personData);
+            // url = query(personData);
             url = query(sandboxData);
             console.log("--- Sending Person Data From Your-Server (Backend) to Your-Client (Frontend)---:");
             res.status(200).send(url);
-            //console.log(JSON.stringify(personData)); // log the data for demonstration purpose only
-            //res.status(200).send(personData); //return personData
         })
             .catch((error) => {
             console.log("---MyInfo NodeJs Library Error---");
@@ -103,30 +101,33 @@ app.post("/getPersonData", function (req, res, next) {
     }
 });
 const findEmploymentStatus = (personData) => {
-    // TODO: fix buggy code
     const cpfHistory = personData.cpfcontributions.history;
     const pastTime = new Date(cpfHistory[cpfHistory.length - 1].date.value);
-    const now = new Date("28/7/22"); //can't use now cos test data is problematic
+    const now = new Date("28/7/22"); //can't use today cos test data is unaccurate
     const thirtyOneDaysInMs = 31 * 24 * 60 * 60 * 1000;
     const timeDiffInMs = now.getTime() - pastTime.getTime();
     console.log(timeDiffInMs);
     if (!personData.residentialstatus.code || timeDiffInMs <= thirtyOneDaysInMs) {
-        return "EMPLOYED"; //foreigners have to be employed
+        return "EMPLOYED";
+        //foreigners have to be employed
         // people with CPF contribution in the last month should also be employed
     }
     if (!personData.noahistory[0]) {
-        return "STUDENT"; //No past history of income
+        return "STUDENT";
+        //No past history of income
     }
     if (!cpfHistory) {
         console.log(cpfHistory);
-        return "UNEM_NOT_SEARCHING"; //only show up to 15 months
+        return "UNEM_NOT_SEARCHING";
+        // cpf history only show up to 15 months
     }
     if (personData.noahistory[0]) {
-        return "SELF_EMPLOYED"; //No past history of income
+        return "SELF_EMPLOYED";
+        //No past history of income
     }
     return "UNEM_SEARCHING";
-    // super hacky, alot of edge cases unaccounted for. to be revisited
 };
+// function checks for ownership of HDB or Private property
 const findOwnership = (personData) => {
     if (personData.ownerprivate.value || personData.hdbownership[0])
         return "YES";
@@ -155,16 +156,16 @@ const findChildrenAge = (personData) => {
         return "YES";
     return "NO";
 };
+//household income no longer available in myinfo, assumption made
 const calculateHouseholdIncome = (personData) => {
-    //household income no longer available in myinfo
     return "2000";
 };
+//no household income, can't calculate per capita income
 const calculatePerCapitaIncome = (personData) => {
-    //no household income, can't calculate per capita income
-    return "YES";
+    return "500";
 };
 const childCitizenship = (personData) => {
-    return "YES";
+    return "SG";
 };
 const query = (personData) => {
     const birthYear = personData.dob.value.substring(0, 4);

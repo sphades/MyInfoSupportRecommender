@@ -1,4 +1,6 @@
-import { cl } from "./color";
+import token from "./token";
+
+const { color } = token;
 
 export const radius = {
   s: "0.25rem",
@@ -26,7 +28,7 @@ export const containerSize = {
   xl: "1140px",
 };
 
-export const focusShadow = `0 0 0 4px ${cl.blue.light}`;
+export const focusShadow = `0 0 0 4px ${color.blue.light}`;
 
 export const shadow = {
   xs: "0 1px 3px 0 rgba(0, 0, 0, 0.10)", // category cards in Figma

@@ -17,6 +17,7 @@ const port = process.env.PORT;
 
 let sandboxData: any;
 
+// calls for sandbox person data on server start
 axios
   .get("https://sandbox.api.myinfo.gov.sg/com/v3/person-sample/S9812381D")
   .then((res) => {
@@ -54,6 +55,7 @@ app.get("/getEnv", function (req, res) {
   }
 });
 
+// Health check to ensure server is running
 app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server");
 });
@@ -62,6 +64,7 @@ app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
 });
 
+// Make API call to MyInfo server
 app.post(
   "/getPersonData",
   function (req: { body: { authCode: any; state: any } }, res: any, next: any) {
@@ -82,14 +85,10 @@ app.post(
           /* 
         P/s: Your logic to handle the person data ...
         */
-          // Since test/sandbox both doesnt allow you to get any other data than the given scope, i need to use sandbox
+          // Since test/sandbox both doesn't allow you to get any other data than the given scope, i need to use sandbox
           // api to test
 
-          // const sandboxData = Axios.get(
-          //   "https://sandbox.api.myinfo.gov.sg/com/v3/person-sample/S9812381D"
-          // );
-
-          //url = query(personData);
+          // url = query(personData);
 
           url = query(sandboxData);
 
@@ -98,8 +97,6 @@ app.post(
           );
 
           res.status(200).send(url);
-          //console.log(JSON.stringify(personData)); // log the data for demonstration purpose only
-          //res.status(200).send(personData); //return personData
         })
         .catch((error: any) => {
           console.log("---MyInfo NodeJs Library Error---");
@@ -118,34 +115,36 @@ app.post(
 );
 
 const findEmploymentStatus = (personData: any): string => {
-  // TODO: fix buggy code
   const cpfHistory = personData.cpfcontributions.history;
   const pastTime = new Date(cpfHistory[cpfHistory.length - 1].date.value);
-  const now = new Date("28/7/22"); //can't use now cos test data is problematic
+  const now = new Date("28/7/22"); //can't use today cos test data is unaccurate
   const thirtyOneDaysInMs = 31 * 24 * 60 * 60 * 1000;
   const timeDiffInMs = now.getTime() - pastTime.getTime();
   console.log(timeDiffInMs);
   if (!personData.residentialstatus.code || timeDiffInMs <= thirtyOneDaysInMs) {
-    return "EMPLOYED"; //foreigners have to be employed
+    return "EMPLOYED";
+    //foreigners have to be employed
     // people with CPF contribution in the last month should also be employed
   }
   if (!personData.noahistory[0]) {
-    return "STUDENT"; //No past history of income
+    return "STUDENT";
+    //No past history of income
   }
   if (!cpfHistory) {
     console.log(cpfHistory);
-    return "UNEM_NOT_SEARCHING"; //only show up to 15 months
+    return "UNEM_NOT_SEARCHING";
+    // cpf history only show up to 15 months
   }
   if (personData.noahistory[0]) {
-    return "SELF_EMPLOYED"; //No past history of income
+    return "SELF_EMPLOYED";
+    //No past history of income
   }
   return "UNEM_SEARCHING";
-  // super hacky, alot of edge cases unaccounted for. to be revisited
 };
 
+// function checks for ownership of HDB or Private property
 const findOwnership = (personData: any): string => {
   if (personData.ownerprivate.value || personData.hdbownership[0]) return "YES";
-
   return "NO";
 };
 
@@ -173,18 +172,18 @@ const findChildrenAge = (personData: any): string => {
   return "NO";
 };
 
+//household income no longer available in myinfo, assumption made
 const calculateHouseholdIncome = (personData: any): string => {
-  //household income no longer available in myinfo
   return "2000";
 };
 
+//no household income, can't calculate per capita income
 const calculatePerCapitaIncome = (personData: any): string => {
-  //no household income, can't calculate per capita income
-  return "YES";
+  return "500";
 };
 
 const childCitizenship = (personData: any): string => {
-  return "YES";
+  return "SG";
 };
 
 const query = (personData: any): string => {
@@ -196,6 +195,5 @@ const query = (personData: any): string => {
   const childrenAge = findChildrenAge(personData);
 
   const defaultURL = `https://supportgowhere.life.gov.sg/eligibility/results?affectedByCovid[]=LOST_JOB|REDUCED_INCOME|HOUSEHOLD_CONTRACTED_COVID|HOUSEHOLD_QO_SHN|FDW_QO_SHN&birthYear=${birthYear}&category[]=FINANCIAL|FAMILIES_PARENTING|EDUCATION|HOUSING|WORK|MENTAL_HEALTH|HEALTHCARE|SENIORS|DISABILITY&childCitizenship[]=SG|PR|OTHERS&citizenship=${nationality}&employmentStatus=${employmentStatus}&hasChildEqualOrBelow21=${childrenAge}&monthlyHouseholdIncome=2000&monthlyPerCapitaIncome=500&needsAssistanceAsPwd=YES&ownsPropertyOfResidence=${ownerOfProperty}&typeOfPropertyOfResidence=${typeOfProperty}`;
-
   return defaultURL;
 };
