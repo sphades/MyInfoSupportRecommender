@@ -6,7 +6,7 @@
     <a href="https://github.com/sphades/MyInfoSupportRecommender"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/sphades/MyInfoSupportRecommender">View Demo</a>
+    <a href="https://master.d3lahcyhpwz9wc.amplifyapp.com/">View Demo</a>
     ·
     <a href="https://github.com/sphades/MyInfoSupportRecommender/issues">Report Bug</a>
     ·
@@ -21,9 +21,17 @@
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
-        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#problem-statement">Problem Statement</a></li>
+        <li><a href="#client">Proposed Solution</a></li>
       </ul>
     </li>
+    <li>
+      <a href="#technical-architecture">Technical Architecture</a>
+      <ul>
+        <li><a href="#client">Client</a></li>
+        <li><a href="#server">Server</a></li>
+        <li><a href="#ci/cd">CI/CD</a></li>
+        </ul>
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
@@ -31,12 +39,8 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+
   </ol>
 </details>
 
@@ -54,11 +58,15 @@ Fortunately, within MyInfo, theres already a common database among 4 of the reco
 
 Video Demo: [YouTube](https://youtu.be/kEnZ-08NAec)
 
+[Live Demo](https://master.d3lahcyhpwz9wc.amplifyapp.com/)
+
+\*\*Note: As required by SingPass API, 'http://localhost:3001/callback' is required to be set as the callback URL without certs or API keys issued by Singpass. Hence, the live demo requires backend to be running locally. The full working demo can be viewed in the YouTube Link.
+
+\*\*Note: Due to lack of API Authentication and Certs issued from SingPass, certain scope of data required for this feature is unavailable. For demonstration, Sandbox Environment API will be used for Person Data.
+
 ### Technical Architecture
 
 To authenticate users, MyInfo Support Recommender takes advantage of SingPass OAuth2 for user authentication. The user information will then be obtained from MyInfo Server.
-
-Note: Due to lack of API authentication and Certs, for demonstration, Sandbox Environment API will be used for Person Data.
 
 #### Client
 
@@ -74,10 +82,8 @@ Backend is hosted by Heroku, which is based on AWS.
 
 #### CI/CD
 
-Prettier and ESlint are inplace to ensure readable code.
-Backend(Heroku) and Frontend(AWS Amplify) are set to automatic deployment whenever a git commit is pushed.
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+Prettier and ESlint have been implemented to ensure readable and consistent code.
+Backend (Heroku) and Frontend (AWS Amplify) are set to automatic deployment whenever a git commit is pushed.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -98,12 +104,8 @@ Backend(Heroku) and Frontend(AWS Amplify) are set to automatic deployment whenev
 ### Prerequisites
 
 - node
-
-- npm
-
-  ```sh
-  npm install npm@latest -g
-  ```
+- yarn
+- git
 
 ### Installation
 
@@ -116,21 +118,27 @@ git clone https://github.com/sphades/MyInfoSupportRecommender.git
 ### 2. Install NPM packages
 
 ```sh
-npm install
+cd frontend
+yarn
+```
+
+```sh
+cd backend
+yarn
 ```
 
 ### 3. Run locally
 
 ```sh
-    // Change API_URL in frontend/src/config/config.ts to '//localhost:8000'
+// Change API_URL in frontend/src/config/config.ts to '//localhost:8000'
 
-    cd frontend
-    npm start
+cd frontend
+yarn start
 ```
 
 ```sh
-    cd backend
-    npm dev
+cd backend
+yarn dev
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
