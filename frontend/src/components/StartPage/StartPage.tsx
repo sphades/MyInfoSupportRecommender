@@ -1,9 +1,9 @@
-import { Button } from "./Button";
 import { cl } from "./color";
 import { StartScreenWrapper, TimerWrapper } from "./StartPage.styles";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { API_URL } from "../config/config";
+import { Button } from "../Button";
+import { API_URL } from "../../config/config";
 
 const Start = (): JSX.Element => {
   const handleStart = () => {
