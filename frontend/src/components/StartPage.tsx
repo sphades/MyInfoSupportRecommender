@@ -1,47 +1,57 @@
 import { Button } from "./Button";
 import { cl } from "./color";
 import { StartScreenWrapper, TimerWrapper } from "./StartPage.styles";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_URL } from "../config/config";
 
 const Start = (): JSX.Element => {
   const handleStart = () => {
-    //wogaa.startTransactionalService("supportgowhere-3933");
-    //return nav(Section.Section1);
+    callAuthoriseApi();
   };
+
+  let state = Math.floor(Math.random() * 100000);
+
+  const [allValues, setAllValues] = useState({
+    clientId: "",
+    redirectUrl: "",
+    attributes: "",
+    purpose: "",
+    environment: "",
+    authApiUrl: "",
+  });
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/getEnv")
-      .then(function (response) {
-        // handle success
+      .get(API_URL + "/getEnv")
+      .then((response) => {
         console.log(response);
+        for (let res of Object.keys(response.data)) {
+          console.log(res, response.data[res]);
+          setAllValues((prevValues) => {
+            return { ...prevValues, [res]: response.data[res] };
+          });
+        }
       })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      })
-      .then(function () {
-        // always executed
-      });
+      .catch((err) => console.log(err));
   }, []);
 
-  // function callAuthoriseApi() {
-  //   var authoriseUrl =
-  //     authApiUrl +
-  //     "?client_id=" +
-  //     clientId +
-  //     "&attributes=" +
-  //     attributes +
-  //     "&purpose=" +
-  //     purpose +
-  //     "&state=" +
-  //     encodeURIComponent(state) +
-  //     "&redirect_uri=" +
-  //     redirectUrl;
-
-  //   window.location = authoriseUrl;
-  // }
+  // ---START---AUTH API---
+  const callAuthoriseApi = () => {
+    var authoriseUrl =
+      allValues.authApiUrl +
+      "?client_id=" +
+      allValues.clientId +
+      "&attributes=" +
+      allValues.attributes +
+      "&purpose=" +
+      allValues.purpose +
+      "&state=" +
+      encodeURIComponent(state) +
+      "&redirect_uri=" +
+      allValues.redirectUrl;
+    (window as Window).location = authoriseUrl;
+  };
 
   return (
     <StartScreenWrapper>

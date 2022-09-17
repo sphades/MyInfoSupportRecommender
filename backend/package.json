@@ -1,24 +1,26 @@
 {
-  "name": "myinfo-demo-app",
-  "version": "3.0.0",
-  "description": "This is MyInfo Demo App",
-  "main": "app.js",
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
   "scripts": {
-    "start": "npm run test",
-    "test": "node app.js test",
-    "sandbox": "node app.js sandbox"
+    "build": "npx tsc",
+    "start": "node dist/index.js",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
   },
-  "author": "MyInfo Team",
-  "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "colors": "^1.4.0",
-    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "lodash": "^4.17.21",
-    "myinfo-connector-nodejs": "^0.0.8",
-    "path": "^0.12.7",
-    "pug": "^3.0.2"
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1",
+    "myinfo-connector-nodejs": "^0.0.11",
+    "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.14",
+    "@types/node": "^18.7.18",
+    "concurrently": "^7.4.0",
+    "nodemon": "^2.0.19",
+    "typescript": "^4.8.3"
   }
 }
